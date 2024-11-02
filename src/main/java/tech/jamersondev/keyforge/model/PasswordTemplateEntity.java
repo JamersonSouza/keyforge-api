@@ -1,15 +1,19 @@
 package tech.jamersondev.keyforge.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_password_entity")
 public class PasswordTemplateEntity implements Serializable {
 
     @Serial
@@ -19,14 +23,14 @@ public class PasswordTemplateEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String generatedPassword;
-    private int passwordLength;
     private Date createdDate;
-    private boolean includeUppercaseLetters;
-    private boolean includeLowercaseLetters;
-    private boolean includeNumbers;
-    private boolean includeSpecialCharacters;
 
     public PasswordTemplateEntity() {
+    }
+
+    public PasswordTemplateEntity(String generatedPassword, Date createdDate) {
+        this.generatedPassword = generatedPassword;
+        this.createdDate = createdDate;
     }
 
     public UUID getId() {
@@ -45,45 +49,6 @@ public class PasswordTemplateEntity implements Serializable {
         this.generatedPassword = generatedPassword;
     }
 
-    public int getPasswordLength() {
-        return passwordLength;
-    }
-
-    public void setPasswordLength(int passwordLength) {
-        this.passwordLength = passwordLength;
-    }
-
-    public boolean isIncludeUppercaseLetters() {
-        return includeUppercaseLetters;
-    }
-
-    public void setIncludeUppercaseLetters(boolean includeUppercaseLetters) {
-        this.includeUppercaseLetters = includeUppercaseLetters;
-    }
-
-    public boolean isIncludeLowercaseLetters() {
-        return includeLowercaseLetters;
-    }
-
-    public void setIncludeLowercaseLetters(boolean includeLowercaseLetters) {
-        this.includeLowercaseLetters = includeLowercaseLetters;
-    }
-
-    public boolean isIncludeNumbers() {
-        return includeNumbers;
-    }
-
-    public void setIncludeNumbers(boolean includeNumbers) {
-        this.includeNumbers = includeNumbers;
-    }
-
-    public boolean isIncludeSpecialCharacters() {
-        return includeSpecialCharacters;
-    }
-
-    public void setIncludeSpecialCharacters(boolean includeSpecialCharacters) {
-        this.includeSpecialCharacters = includeSpecialCharacters;
-    }
 
     public Date getCreatedDate() {
         return createdDate;
