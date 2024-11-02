@@ -1,5 +1,6 @@
 package tech.jamersondev.keyforge.controllers;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -41,7 +42,7 @@ public class PasswordTemplateController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PasswordTemplateResponseDTO>> list(@PageableDefault(size = 12) Pageable pageable){
+    public ResponseEntity<Page<PasswordTemplateResponseDTO>> list(@PageableDefault(size = 12)  @Parameter(hidden = true) Pageable pageable){
         Page<PasswordTemplateResponseDTO> response = this.passwordTemplateService.list(pageable);
         return ResponseEntity.ok(response);
     }
