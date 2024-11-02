@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 public class PasswordTemplateEntity implements Serializable {
@@ -19,6 +20,7 @@ public class PasswordTemplateEntity implements Serializable {
     private UUID id;
     private String generatedPassword;
     private int passwordLength;
+    private Date createdDate;
     private boolean includeUppercaseLetters;
     private boolean includeLowercaseLetters;
     private boolean includeNumbers;
@@ -81,5 +83,13 @@ public class PasswordTemplateEntity implements Serializable {
 
     public void setIncludeSpecialCharacters(boolean includeSpecialCharacters) {
         this.includeSpecialCharacters = includeSpecialCharacters;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }
