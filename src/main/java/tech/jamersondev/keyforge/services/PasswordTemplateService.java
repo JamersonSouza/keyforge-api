@@ -1,5 +1,7 @@
 package tech.jamersondev.keyforge.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.jamersondev.keyforge.interfaces.IPasswordTemplate;
 import tech.jamersondev.keyforge.model.PasswordTemplateEntity;
@@ -56,5 +58,10 @@ public class PasswordTemplateService implements IPasswordTemplate {
         }
         PasswordTemplateEntity passwordTemplateEntity = new PasswordTemplateEntity(password.toString(), new Date());
         return this.passwordTemplateRepository.save(passwordTemplateEntity);
+    }
+
+    @Override
+    public Page<PasswordTemplateResponseDTO> list(Pageable pageable) {
+        return this.passwordTemplateRepository.findAll(pageable).map(PasswordTemplateResponseDTO::new);
     }
 }

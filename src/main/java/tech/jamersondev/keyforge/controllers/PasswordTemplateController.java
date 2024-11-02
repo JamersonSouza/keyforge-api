@@ -1,7 +1,11 @@
 package tech.jamersondev.keyforge.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,4 +39,11 @@ public class PasswordTemplateController {
         URI uri = uriComponentsBuilder.path("password/{passwordId}").buildAndExpand(generate.getId()).toUri();
         return ResponseEntity.created(uri).body(new PasswordTemplateResponseDTO(generate.getCreatedDate(), generate.getGeneratedPassword()));
     }
+
+    @GetMapping
+    public ResponseEntity<Page<PasswordTemplateResponseDTO>> list(@PageableDefault(size = 12) Pageable pageable){
+        Page<PasswordTemplateResponseDTO> response = this.passwordTemplateService.list(pageable);
+        return ResponseEntity.ok(response);
+    }
+
 }
