@@ -1,9 +1,38 @@
 package tech.jamersondev.keyforge.controllers;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+import tech.jamersondev.keyforge.model.PasswordTemplateEntity;
+import tech.jamersondev.keyforge.records.PasswordTemplateDTO;
+import tech.jamersondev.keyforge.records.PasswordTemplateResponseDTO;
+import tech.jamersondev.keyforge.services.PasswordTemplateService;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/password")
 public class PasswordTemplateController {
+
+    private final PasswordTemplateService passwordTemplateService;
+
+    public PasswordTemplateController(PasswordTemplateService passwordTemplateService) {
+        this.passwordTemplateService = passwordTemplateService;
+    }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<PasswordTemplateResponseDTO> generatePassword(
+            @RequestBody PasswordTemplateDTO password,
+            UriComponentsBuilder uriComponentsBuilder
+            ) throws Exception {
+
+        PasswordTemplateEntity generate = this.passwordTemplateService.generate(password);
+        URI uri = uriComponentsBuilder.path("password/{passwordId}").buildAndExpand(generate.getId()).toUri();
+        return ResponseEntity.created(uri).body(new PasswordTemplateResponseDTO(generate.getCreatedDate(), generate.getGeneratedPassword()));
+    }
 }
