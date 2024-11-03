@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  keyforge:
+    image: jamersonsouza/keyforge:latest
+    container_name: keyforge-api
+    ports:
+      - "8080:8080" 
